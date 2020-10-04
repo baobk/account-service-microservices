@@ -3,6 +3,7 @@ pipeline {
 
     environment{
         registry = "baobk/train-schedule"
+        dockerImage =''
     }
     stages {
         stage('Build') {
@@ -18,7 +19,7 @@ pipeline {
             }
             steps {
                 script {
-                    app = dockerImage = docker.build registry + ":$BUILD_NUMBER"
+                    dockerImage = dockerImage = docker.build registry + ":$BUILD_NUMBER"
 
                 }
             }
@@ -30,8 +31,7 @@ pipeline {
            steps {
                 script {
                     docker.withRegistry('https://registry.hub.docker.com', 'docker_hub_login') {
-
-                        app.push("latest")
+                        dockerImage.push("latest")
                     }
                 }
            }
