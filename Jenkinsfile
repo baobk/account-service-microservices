@@ -18,10 +18,8 @@ pipeline {
             }
             steps {
                 script {
-                    app = dockerImage = docker.build("baobk/train-schedule:${env.BUILD_NUMBER}")
-                     app.inside {
-                        sh 'echo Hello, World!'
-                     }
+                    app = dockerImage = docker.build registry + ":$BUILD_NUMBER"
+
                 }
             }
         }
@@ -32,7 +30,7 @@ pipeline {
            steps {
                 script {
                     docker.withRegistry('https://registry.hub.docker.com', 'docker_hub_login') {
-                        app.push("${env.BUILD_NUMBER}")
+
                         app.push("latest")
                     }
                 }
