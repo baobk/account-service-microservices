@@ -19,7 +19,7 @@ pipeline {
             steps {
                 script {
 
-                    app = docker.build(DOCKER_IMAGE_NAME,"./docker")
+                    app = docker.build(DOCKER_IMAGE_NAME)
                     app.inside {
                         sh 'make docker image'
                     }
