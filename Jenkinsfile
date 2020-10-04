@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment{
-        DOCKER_IMAGE_NAME = "baobk/train-schedule"
+        registry = "baobk/train-schedule"
     }
     stages {
         stage('Build') {
@@ -18,11 +18,7 @@ pipeline {
             }
             steps {
                 script {
-
-                    app = docker.build(DOCKER_IMAGE_NAME)
-                    app.inside {
-                        sh 'make docker image'
-                    }
+                    dockerImage = docker.build registry + ":$BUILD_NUMBER"
                 }
             }
         }
