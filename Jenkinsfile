@@ -18,7 +18,7 @@ pipeline {
             }
             steps {
                 script {
-                    app = dockerImage = docker.build registry
+                    app = dockerImage = docker.build("baobk/train-schedule:${env.BUILD_NUMBER}")
                      app.inside {
                         sh 'echo Hello, World!'
                      }
