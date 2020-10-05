@@ -21,11 +21,9 @@ spec:
           image: account-service
           ports:
             - containerPort: 2222
-
-
 ---
 kind: Service
-apiVersion: v1
+apiVersion: apps/v1
 metadata:
   name: account-service
 spec:
