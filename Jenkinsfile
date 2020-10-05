@@ -25,7 +25,7 @@ pipeline {
             }
         }
         stage('Push docker image') {
-            when {
+            when {` 4
                 branch 'master'
             }
            steps {
@@ -35,6 +35,19 @@ pipeline {
                     }
                 }
            }
+        }
+        stage('DeployToProduction') {
+            when {
+                branch 'master'
+            }
+            steps {
+                milestone(1)
+                kubernetesDeploy(
+                    kubeconfigId: 'kubeconfig',
+                    configs: 'train-schedule-kube.yml',
+                    enableConfigSubstitution: true
+                )
+            }
         }
     }
 }
