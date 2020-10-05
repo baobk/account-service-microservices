@@ -1,0 +1,44 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: account-service
+spec:
+  selector:
+    run: account-service
+  ports:
+    - name: port1
+      protocol: TCP
+      port: 2222
+      targetPort: 2222
+    - name: port2
+      protocol: TCP
+      port: 27017
+      targetPort: 27017
+  type: NodePort
+
+---
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: account-service
+  labels:
+    run: account-service
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: account-service
+    spec:
+      containers:
+        - name: account-service
+          image: piomin/account-service
+          ports:
+            - containerPort: 2222
+              protocol: TCP
+        - name: mongo
+          image: library/mongo
+          ports:
+            - containerPort: 27017
+              protocol: TCP

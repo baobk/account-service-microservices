@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: account-service-deployment
+  labels:
+    app: account-service
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: account-service
+      track: stable
+  template:
+    metadata:
+      labels:
+        app: account-service
+        track: stable
+    spec:
+      containers:
+        - name: account-service
+          image: account-service
+          ports:
+            - containerPort: 2222
+
